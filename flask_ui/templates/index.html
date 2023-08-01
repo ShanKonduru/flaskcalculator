@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Calculator</title>
+</head>
+<body>
+    <h1>Simple Calculator</h1>
+
+    <label for="num1">Number 1: </label>
+    <input type="number" id="num1" name="num1" required>
+    <br>
+
+    <label for="num2">Number 2: </label>
+    <input type="number" id="num2" name="num2" required>
+    <br>
+
+    <label for="addResult">Add Result: </label>
+    <label id="addResultValue"></label>
+    <br>
+
+    <label for="subtractResult">Subtract Result: </label>
+    <label id="subtractResultValue"></label>
+    <br>
+
+    <button onclick="add()">Add</button>
+    <button onclick="subtract()">Subtract</button>
+
+    <script>
+        function add() {
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+
+            // Add console log before API call
+            console.log("Add API Call: num1 =", num1, "num2 =", num2);
+
+            fetch("http://localhost:5000/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    num1: num1,
+                    num2: num2
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("addResultValue").innerText = response.json();
+            })
+            .catch(error => {
+                console.error("Error fetching Add API:", error);
+            });
+        }
+
+        function subtract() {
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+
+            // Add console log before API call
+            console.log("Subtract API Call: num1 =", num1, "num2 =", num2);
+
+            fetch("http://localhost:5000/subtract", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    num1: num1,
+                    num2: num2
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("subtractResultValue").innerText = response.json();
+            })
+            .catch(error => {
+                console.error("Error fetching Subtract API:", error);
+            });
+        }
+    </script>
+</body>
+</html>

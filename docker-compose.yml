@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example_password
+      POSTGRES_DB: api_data
+    volumes:
+      - api_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api_add:
+    build:
+      context: ./api_add
+    ports:
+      - "5001:5000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://postgres:example_password@db:5432/api_data"
+
+  api_subtract:
+    build:
+      context: ./api_subtract
+    ports:
+      - "5002:5000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://postgres:example_password@db:5432/api_data"
+
+  flask_ui:
+    build:
+      context: ./flask_ui
+    ports:
+      - "80:5000"
+    depends_on:
+      - api_add
+      - api_subtract
+
+volumes:
+  api_db_data:
