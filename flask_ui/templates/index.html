@@ -45,7 +45,7 @@
             .then(function(data) {
                 console.info("Add result :", data.result);
                 document.getElementById("ResultValue").innerText = data.result;
-            });
+            })
             .catch(function(error) {
                 console.error("Error fetching Add API:", error);
             });
@@ -74,7 +74,7 @@
             .then(function(data) {
                 console.info("subtracted result :", data.result);
                 document.getElementById("ResultValue").innerText = data.result;
-            });
+            })
             .catch(function(error) {
                 console.error("Error fetching Subtract API:", error);
             });

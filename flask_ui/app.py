@@ -1,6 +1,8 @@
 from flask import Flask, render_template, jsonify, request
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins="http://localhost:80")
 
 @app.route('/')
 def index():

@@ -5,7 +5,13 @@ from flask_cors import CORS
 import psycopg2
 
 app = Flask(__name__)
-CORS(app, origins="http://localhost:8080")
+
+# Function to set CORS headers for responses
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "http://localhost"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    response.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+    return response
 
 # Call the create_table function before starting the API
 create_table()
