@@ -30,7 +30,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: "postgresql://postgres:example_password@db:5432/api_data"
+      DATABASE_URL: "postgresql://admin:admin123$@db:5432/api_data"
 
   flask_ui:
     build:

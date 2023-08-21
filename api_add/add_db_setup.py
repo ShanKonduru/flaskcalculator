@@ -4,9 +4,9 @@ def create_table():
     connection = psycopg2.connect(
         host='db',
         port='5432',
-        user='postgres',
-        password='example_password',
-        database='api_data'
+        user='admin',
+        password='admin123$',
+        database='add_data'
     )
     cursor = connection.cursor()
     cursor.execute(

@@ -1,17 +1,11 @@
 from flask import Flask, request, jsonify
-from  db_setup import create_table
+from  sub_db_setup import create_table
 from flask_cors import CORS
 
 import psycopg2
 
 app = Flask(__name__)
-
-# Function to set CORS headers for responses
-def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = "http://localhost"
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
-    response.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS"
-    return response
+CORS(app, resources={r"/*": {"origins": "http://localhost:5000"}})
 
 # Call the create_table function before starting the API
 create_table()
@@ -29,9 +23,9 @@ def save_to_db(operation, num1, num2, result):
     connection = psycopg2.connect(
         host='db',
         port='5432',
-        user='postgres',
-        password='example_password',
-        database='api_data'
+        user='admin',
+        password='admin123$',
+        database='sub_data'
     )
     cursor = connection.cursor()
     cursor.execute("INSERT INTO api_results (operation, num1, num2, result) VALUES (%s, %s, %s, %s);",
@@ -41,4 +35,4 @@ def save_to_db(operation, num1, num2, result):
     connection.close()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5002)
